@@ -104,11 +104,13 @@ class ViewController: UIViewController {
     NSLayoutConstraint.activate([conX, conBottom, conWidth, conHeight])
     
     print("imageView.frame.size.height  is \(imageView.frame.height)")
+    print("imageView.frame.size.width is \(imageView.frame.width)")
     //TODO: Create and animate some constraints!
     
     view.layoutIfNeeded()
 
      print("imageView.frame.size.height  is \(imageView.frame.size.height)")
+    print("imageView.frame.size.width is \(imageView.frame.size.width)")
     UIView.animate(
         withDuration: 0.8,
         delay: 0.0,
@@ -117,9 +119,12 @@ class ViewController: UIViewController {
         conWidth.constant = 0.0
         self.view.layoutIfNeeded()
             print("imageView.frame.size.height during first animation is \(imageView.frame.size.height)")
+            print("imageView.frame.size.width during first animation is \(imageView.frame.size.width)")
         },
         completion: { _ in
                   print("imageView.frame.size.height after first animation completes is \(imageView.frame.size.height)")
+                  print("imageView.frame.size.width after first animation completes is \(imageView.frame.size.width)")
+                  print("MARK: First animation completes")
     })
 
     UIView.animate(
@@ -130,10 +135,13 @@ class ViewController: UIViewController {
             conWidth.constant = -50.0
             self.view.layoutIfNeeded()
            print("imageView.frame.size.height during second animation is \(imageView.frame.size.height)")
+           print("imageView.frame.size.width during second animation is \(imageView.frame.size.width)")
         },
         completion: { _ in
             imageView.removeFromSuperview()
                   print("imageView.frame.size.height after second animation completes is \(imageView.frame.height)")
+                  print("imageView.frame.size.width after second animation completes is \(imageView.frame.width)")
+                  print("MARK: Second animation completes")
        }
     )
   }
