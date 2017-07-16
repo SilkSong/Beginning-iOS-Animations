@@ -18,16 +18,16 @@ PlaygroundPage.current.liveView = view
  * Go nuts! Make all kinds of damping and velocity combinations and view them side-by-side.
 */
 
-view.duration = 2.0
+view.duration = 5.0
 
-view.beachballSpringDamping = 0.1
-view.beachballInitialSpringVelocity = 0.0
+view.beachballSpringDamping = 0.5
+view.beachballInitialSpringVelocity = 5
 
-view.drinkSpringDamping = 0.5
-view.drinkInitialSpringVelocity = 0.0
+view.drinkSpringDamping = 5
+view.drinkInitialSpringVelocity = 5
 
-view.icecreamSpringDamping = 1.0
-view.icecreamInitialSpringVelocity = 0.0
+view.icecreamSpringDamping = 10
+view.icecreamInitialSpringVelocity = 5
 /*:
  **Remember:**
  

@@ -19,17 +19,17 @@ PlaygroundPage.current.liveView = view
 */
 view.duration = 2.0
 
-let beachballOptions: UIViewAnimationOptions = [.curveEaseIn]
+let beachballOptions: UIViewAnimationOptions = [.curveEaseIn, .repeat, .autoreverse]
 
-let drinkOptions: UIViewAnimationOptions = [.curveEaseOut]
+let drinkOptions: UIViewAnimationOptions = [.curveEaseOut, .repeat, .autoreverse]
 
-let icecreamOptions: UIViewAnimationOptions = [.curveEaseInOut]
+let icecreamOptions: UIViewAnimationOptions = [.curveLinear, .repeat, .autoreverse]
 
 
 //: The animation code is below, for easy reference. The remainder of the supporting code can be found in the "Sources" folder.
 
 extension OptionsView {
-  func animate() {
+    @objc func animate() {
     UIView.animate(
       withDuration: duration, delay: 0.0,
       options: beachballOptions, animations: {
