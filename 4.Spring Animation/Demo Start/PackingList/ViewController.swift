@@ -75,9 +75,11 @@ class ViewController: UIViewController {
     closeButtonTrailing.constant = isMenuOpen ? 16.0 : 8.0
     
     UIView.animate(
-      withDuration: 0.33,
+      withDuration: 1.0,
       delay: 0.0,
-      options: .curveEaseIn,
+      usingSpringWithDamping: 0.4,
+      initialSpringVelocity: 10,
+      options: [],
       animations: {
         let angle: CGFloat = self.isMenuOpen
           ? .pi / 4
@@ -106,6 +108,8 @@ class ViewController: UIViewController {
     UIView.animate(
       withDuration: 0.8,
       delay: 0.0,
+      usingSpringWithDamping: 0.6,
+      initialSpringVelocity: 10,
       animations: {
         conBottom.constant = -imageView.frame.size.height / 2
         conWidth.constant = 0.0
