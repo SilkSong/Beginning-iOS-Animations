@@ -77,7 +77,7 @@ class ViewController: UIViewController {
     UIView.animate(
       withDuration: 1.0,
       delay: 0.0,
-      usingSpringWithDamping: 0.4,
+      usingSpringWithDamping: 0.8,
       initialSpringVelocity: 10.0,
       options: [],
       animations: {
@@ -121,6 +121,8 @@ class ViewController: UIViewController {
     UIView.animate(
       withDuration: 0.67,
       delay: 2.0,
+      usingSpringWithDamping: 0.25,
+      initialSpringVelocity: 100.0,
       animations: {
         conBottom.constant = imageView.frame.size.height
         conWidth.constant = -50.0

@@ -52,7 +52,7 @@ public class SpringsView: UIView {
     button.setTitle("Animate!", for: .normal)
     button.setTitleColor(#colorLiteral(red: 0.01164326165, green: 0.6604029536, blue: 0.9141276479, alpha: 1), for: .normal)
     button.setTitleColor(#colorLiteral(red: 0.9834440351, green: 0.6727286577, blue: 0.08379179984, alpha: 1), for: .highlighted)
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 26, weight: UIFontWeightBold)
+    button.titleLabel?.font = UIFont.systemFont(ofSize: 26, weight: UIFont.Weight.bold)
     button.backgroundColor = #colorLiteral(red: 1, green: 0.9062726498, blue: 0.6375227571, alpha: 1)
     button.layer.cornerRadius = 10
     return button

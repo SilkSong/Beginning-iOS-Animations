@@ -39,7 +39,7 @@ view.icecreamInitialSpringVelocity = 0.0
 //: The animation code is below, for easy reference. The remainder of the supporting code can be found in the "Sources" folder.
 
 extension SpringsView {
-  func animate() {
+    @objc func animate() {
     UIView.animate(
       withDuration: duration, delay: 0.0,
       usingSpringWithDamping: beachballSpringDamping,

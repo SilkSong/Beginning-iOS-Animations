@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5F3F8E45BF0E85B0F0A9D0E74361027CAF43E9C1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2CA5A0F4749D0F816587BBC97C4539A64E831D40" : 9223372036854775807,
+    "5F3F8E45BF0E85B0F0A9D0E74361027CAF43E9C1" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "63D2B20A-5BE1-4386-BFD7-7467E742B9DF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2CA5A0F4749D0F816587BBC97C4539A64E831D40" : "",
+    "5F3F8E45BF0E85B0F0A9D0E74361027CAF43E9C1" : "Beginning%20iOS%20Animation\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "PackingList",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "4.Spring Animation\/Challenge Start\/PackingList.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SilkSong\/iOS-Apprentice-Checklists.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2CA5A0F4749D0F816587BBC97C4539A64E831D40"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SilkSong\/Beginning-iOS-Animations.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5F3F8E45BF0E85B0F0A9D0E74361027CAF43E9C1"
+    }
+  ]
+}
