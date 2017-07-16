@@ -95,54 +95,40 @@ class ViewController: UIViewController {
     view.addSubview(imageView)
     
     let conX = imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-    let conBottom = imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: imageView.frame.height)
-    
-    let conWidth = imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33, constant: -50)
-    
+    let conTop = imageView.topAnchor.constraint(equalTo: view.bottomAnchor)
+    let conWidth = imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3, constant: -50)
     let conHeight = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
-
-    NSLayoutConstraint.activate([conX, conBottom, conWidth, conHeight])
+    
+    NSLayoutConstraint.activate([conX, conTop, conWidth, conHeight])
     
     print("imageView.frame.size.height  is \(imageView.frame.height)")
     print("imageView.frame.size.width is \(imageView.frame.width)")
     //TODO: Create and animate some constraints!
     
     view.layoutIfNeeded()
-
-     print("imageView.frame.size.height  is \(imageView.frame.size.height)")
-    print("imageView.frame.size.width is \(imageView.frame.size.width)")
+    
+    conTop.constant = -imageView.frame.size.height / 2
+    conWidth.constant = 0.0
+    
     UIView.animate(
         withDuration: 0.8,
         delay: 0.0,
         animations: {
-        conBottom.constant = -imageView.frame.size.height / 2
-        conWidth.constant = 0.0
-        self.view.layoutIfNeeded()
-            print("imageView.frame.size.height during first animation is \(imageView.frame.size.height)")
-            print("imageView.frame.size.width during first animation is \(imageView.frame.size.width)")
-        },
-        completion: { _ in
-                  print("imageView.frame.size.height after first animation completes is \(imageView.frame.size.height)")
-                  print("imageView.frame.size.width after first animation completes is \(imageView.frame.size.width)")
-                  print("MARK: First animation completes")
-    })
-
+            self.view.layoutIfNeeded()
+    },
+        completion: nil
+    )
+    
+    
+    conTop.constant = 0.0
+    conWidth.constant = -50
     UIView.animate(
         withDuration: 0.67,
         delay: 2.0,
         animations: {
-            conBottom.constant = imageView.frame.size.height
-            conWidth.constant = -50.0
             self.view.layoutIfNeeded()
-           print("imageView.frame.size.height during second animation is \(imageView.frame.size.height)")
-           print("imageView.frame.size.width during second animation is \(imageView.frame.size.width)")
         },
-        completion: { _ in
-            imageView.removeFromSuperview()
-                  print("imageView.frame.size.height after second animation completes is \(imageView.frame.height)")
-                  print("imageView.frame.size.width after second animation completes is \(imageView.frame.width)")
-                  print("MARK: Second animation completes")
-       }
+        completion: nil
     )
   }
     
