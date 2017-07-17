@@ -219,6 +219,24 @@ class ViewController: UIViewController {
   
   func summarySwitch(to summaryText: String) {
     //TODO: Animation
+    UIView.animateKeyframes(
+        withDuration: 1.0,
+        delay: 0.0,
+        animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.45, animations: {
+                self.summary.center.y -= 100.0
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.45, animations: {
+                self.summary.center.y += 100.0
+            })
+        },
+        completion: nil
+    )
+    
+    delay(seconds: 0.5) {
+        self.summary.text = summaryText
+    }
   }
 
   
@@ -226,8 +244,7 @@ class ViewController: UIViewController {
   
   func changeFlight(to data: FlightData, animated: Bool = false) {
     
-    // populate the UI with the next flight's data
-    summary.text = data.summary
+
     
     if animated {
       fade(
@@ -262,6 +279,8 @@ class ViewController: UIViewController {
       cubeTransition(label: gateNr, text: data.gateNr)
       
       planeDepart()
+        
+        summarySwitch(to: data.summary)
     } else {
       bgImageView.image = UIImage(named: data.weatherImageName)
       snowView.isHidden = !data.showWeatherEffects
@@ -272,6 +291,8 @@ class ViewController: UIViewController {
       flightNr.text = data.flightNr
       gateNr.text = data.gateNr
       flightStatus.text = data.flightStatus
+        
+      summary.text = data.summary
     }
     
     // schedule next flight
