@@ -66,7 +66,8 @@ class ViewController: UIViewController {
         overlayView.alpha = 1.0
         overlayView.center.y -= 20
         overlayView.bounds.size = self.bgImageView.bounds.size
-      }, completion: { _ in
+      },
+      completion: { _ in
         //Update background view & remove helper view
         self.bgImageView.image = toImage
         overlayView.removeFromSuperview()
@@ -88,11 +89,11 @@ class ViewController: UIViewController {
     label: UILabel,
     text: String,
     offset: CGPoint
-  ) {
+    ) {
     //Create & set up helper label
     let auxLabel = duplicateLabel(label: label)
     auxLabel.text = text
-
+    
     auxLabel.transform = CGAffineTransform(translationX: offset.x, y: offset.y)
     auxLabel.alpha = 0
     view.addSubview(auxLabel)
@@ -105,11 +106,12 @@ class ViewController: UIViewController {
       animations: {
         label.transform = CGAffineTransform(translationX: offset.x, y: offset.y)
         label.alpha = 0
-    },
+      },
       completion: nil
     )
     
     //Fade in & translate helper label
+    
     UIView.animate(
       withDuration: 0.25,
       delay: 0.2,
@@ -131,37 +133,98 @@ class ViewController: UIViewController {
   func cubeTransition(
     label: UILabel,
     text: String
-  ) {
-    //TODO: Animate me!!
-    
+    ) {
     //Create & set up a helper label
     let auxLabel = duplicateLabel(label: label)
     auxLabel.text = text
     
-    let auxLabelOffset = label.frame.size.height / 2
+    let auxLabelOffset = label.frame.size.height/2.0
     
-    let scale = CGAffineTransform(scaleX: 1.0, y: 0.1)
-    let translate = CGAffineTransform(translationX: 0.0, y: auxLabelOffset)
+    let scale = CGAffineTransform(
+      scaleX: 1.0,
+      y: 0.1
+    )
+    let translate = CGAffineTransform(
+      translationX: 0.0,
+      y: auxLabelOffset
+    )
+    
     auxLabel.transform = scale.concatenating(translate)
-    label.superview?.addSubview(auxLabel)
-//    
-//    UIView.animate(
-//        withDuration: 0.5,
-//        delay: 0,
-//        options: .curveEaseIn,
-//        animations: {
-//            auxLabel.transform = .identity
-//            label.transform = scale.concatenating(translate.inverted())
-//        },
-//        completion: { _ in
-//            label.text = auxLabel.text
-//            label.transform = .identity
-//            
-//            auxLabel.removeFromSuperview()
-//        }
-//    )
     
+    label.superview?.addSubview(auxLabel)
+    
+    UIView.animate(
+      withDuration: 0.5,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        //Scale and translate the helper label down
+        auxLabel.transform = .identity
+        //Scale and translate the real label up
+        label.transform = scale
+          .concatenating(translate.inverted())
+      },
+      completion: {_ in
+        //Update the real label's text and reset its transform
+        label.text = auxLabel.text
+        label.transform = .identity
+        
+        //Remove the helper label
+        auxLabel.removeFromSuperview()
+      }
+    )
   }
+
+  
+  func planeDepart() {
+    //TODO: Animate adorable plane
+    let originalCenter = planeImage.center
+    
+    UIView.animateKeyframes(
+        withDuration: 1.5,
+        delay: 0.0,
+        animations: {
+            UIView.addKeyframe(
+                withRelativeStartTime: 0,
+                relativeDuration: 0.25,
+                animations: {
+                    self.planeImage.center.x += 80
+                    self.planeImage.center.y -= 10
+                }
+            )
+            UIView.addKeyframe(
+                withRelativeStartTime: 0.1,
+                relativeDuration: 0.4,
+                animations: {
+                    self.planeImage.transform = CGAffineTransform(rotationAngle: -.pi / 8)
+                }
+            )
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: 0.25, animations: {
+                self.planeImage.center.x += 100
+                self.planeImage.center.y -= 50
+                self.planeImage.alpha = 0
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.51, relativeDuration: 0.01, animations: {
+                self.planeImage.transform = .identity
+                self.planeImage.center = CGPoint(x: 0, y: originalCenter.y)
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.55, relativeDuration: 0.45, animations: {
+                self.planeImage.alpha = 1
+                self.planeImage.center.x = originalCenter.x
+            })
+        },
+        completion: nil)
+
+  }
+    
+  
+  func summarySwitch(to summaryText: String) {
+    //TODO: Animate with keyframes
+  }
+
   
   //MARK: custom methods
   
@@ -169,17 +232,13 @@ class ViewController: UIViewController {
     
     // populate the UI with the next flight's data
     summary.text = data.summary
-    flightNr.text = data.flightNr
-    gateNr.text = data.gateNr
-
     
-    // animate the UI
     if animated {
       fade(
         toImage: UIImage(named: data.weatherImageName)!,
         showEffects: data.showWeatherEffects
       )
-
+      
       let offsetDeparting = CGPoint(
         x: data.showWeatherEffects ? -80.0 : 80,
         y: 0.0
@@ -201,8 +260,12 @@ class ViewController: UIViewController {
         text: data.arrivingTo,
         offset: offsetArriving
       )
-    
-     cubeTransition(label: flightStatus, text: data.flightStatus)
+      
+      cubeTransition(label: flightStatus, text: data.flightStatus)
+      cubeTransition(label: flightNr, text: data.flightNr)
+      cubeTransition(label: gateNr, text: data.gateNr)
+        
+        planeDepart()
       
     } else {
       bgImageView.image = UIImage(named: data.weatherImageName)
@@ -210,7 +273,10 @@ class ViewController: UIViewController {
       
       departingFrom.text = data.departingFrom
       arrivingTo.text = data.arrivingTo
-        flightStatus.text = data.flightStatus
+      
+      flightNr.text = data.flightNr
+      gateNr.text = data.gateNr
+      flightStatus.text = data.flightStatus
     }
     
     // schedule next flight
