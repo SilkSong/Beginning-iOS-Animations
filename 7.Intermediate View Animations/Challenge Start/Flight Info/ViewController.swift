@@ -135,12 +135,36 @@ class ViewController: UIViewController {
     //TODO: Animate me!!
     
     //Create & set up a helper label
+    let auxLabel = duplicateLabel(label: label)
+    auxLabel.text = text
     
-    //Scale and translate the helper label down
-    //Scale and translate the real label up
+    let auxLabelOffset = label.frame.size.height / 2
     
-    //Update the real label's text and reset its transform
-    //Remove the helper label
+    let scale = CGAffineTransform(scaleX: 1.0, y: 0.1)
+    let translate = CGAffineTransform(translationX: 0.0, y: auxLabelOffset)
+    auxLabel.transform = scale.concatenating(translate)
+    label.superview?.addSubview(auxLabel)
+    
+    UIView.animate(
+        withDuration: 0.5,
+        delay: 0,
+        options: .curveEaseIn,
+        animations: {
+            //Scale and translate the real label up
+            //Scale and translate the helper label down
+            auxLabel.transform = .identity
+            label.transform = scale.concatenating(translate.inverted())
+        },
+        completion: { _ in
+            //Update the real label's text and reset its transform
+            //Remove the helper label
+            label.text = auxLabel.text
+            label.transform = .identity
+            
+            auxLabel.removeFromSuperview()
+        }
+    )
+    
   }
   
   //MARK: custom methods
@@ -151,7 +175,6 @@ class ViewController: UIViewController {
     summary.text = data.summary
     flightNr.text = data.flightNr
     gateNr.text = data.gateNr
-    flightStatus.text = data.flightStatus
 
     
     // animate the UI
@@ -182,6 +205,8 @@ class ViewController: UIViewController {
         text: data.arrivingTo,
         offset: offsetArriving
       )
+    
+     cubeTransition(label: flightStatus, text: data.flightStatus)
       
     } else {
       bgImageView.image = UIImage(named: data.weatherImageName)
@@ -189,6 +214,7 @@ class ViewController: UIViewController {
       
       departingFrom.text = data.departingFrom
       arrivingTo.text = data.arrivingTo
+        flightStatus.text = data.flightStatus
     }
     
     // schedule next flight
