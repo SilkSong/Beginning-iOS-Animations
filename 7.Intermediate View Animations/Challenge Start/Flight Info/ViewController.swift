@@ -23,6 +23,8 @@
 import UIKit
 import QuartzCore
 
+
+//MARK: ViewController
 class ViewController: UIViewController {
   
   @IBOutlet var bgImageView: UIImageView!
@@ -72,37 +74,123 @@ class ViewController: UIViewController {
     )
     
     UIView.animate(
-        withDuration: 1,
-        delay: 0.0,
-        options: [.curveEaseOut],
-        animations: {
-            self.snowView.alpha = showEffects ? 1.0 : 0.0
-        },
-        completion: nil)
+      withDuration: 1.0,
+      delay: 0.0,
+      options: [.curveEaseOut],
+      animations: {
+        self.snowView.alpha = showEffects ? 1.0 : 0.0
+      },
+      completion: nil
+    )
+  }
+  
+  func moveLabel(
+    label: UILabel,
+    text: String,
+    offset: CGPoint
+  ) {
+    //Create & set up helper label
+    let auxLabel = duplicateLabel(label: label)
+    auxLabel.text = text
+
+    auxLabel.transform = CGAffineTransform(translationX: offset.x, y: offset.y)
+    auxLabel.alpha = 0
+    view.addSubview(auxLabel)
+    
+    //Fade out & translate real label
+    UIView.animate(
+      withDuration: 0.5,
+      delay: 0.0,
+      options: .curveEaseIn,
+      animations: {
+        label.transform = CGAffineTransform(translationX: offset.x, y: offset.y)
+        label.alpha = 0
+      },
+      completion: nil
+    )
+    
+    //Fade in & translate helper label
+    UIView.animate(
+      withDuration: 0.25,
+      delay: 0.2,
+      options: .curveEaseIn,
+      animations: {
+        auxLabel.transform = .identity
+        auxLabel.alpha = 1.0
+      },
+      completion: {_ in
+        //Update real label & remove helper label
+        label.text = text
+        label.alpha = 1.0
+        label.transform = .identity
+        auxLabel.removeFromSuperview()
+      }
+    )
+  }
+  
+  func cubeTransition(
+    label: UILabel,
+    text: String
+  ) {
+    //TODO: Animate me!!
+    
+    //Create & set up a helper label
+    
+    //Scale and translate the helper label down
+    //Scale and translate the real label up
+    
+    //Update the real label's text and reset its transform
+    //Remove the helper label
   }
   
   //MARK: custom methods
+  
   func changeFlight(to data: FlightData, animated: Bool = false) {
     
     // populate the UI with the next flight's data
     summary.text = data.summary
     flightNr.text = data.flightNr
     gateNr.text = data.gateNr
-    departingFrom.text = data.departingFrom
-    arrivingTo.text = data.arrivingTo
     flightStatus.text = data.flightStatus
 
-    //TODO: animate the UI
+    
+    // animate the UI
     if animated {
-        fade(
-            toImage: UIImage(named: data.weatherImageName)!,
-            showEffects: data.showWeatherEffects
-        )
-    } else {
-        bgImageView.image = UIImage(named: data.weatherImageName)
-        snowView.isHidden = !data.showWeatherEffects
-    }
+      fade(
+        toImage: UIImage(named: data.weatherImageName)!,
+        showEffects: data.showWeatherEffects
+      )
 
+      let offsetDeparting = CGPoint(
+        x: data.showWeatherEffects ? -80.0 : 80,
+        y: 0.0
+      )
+      
+      let offsetArriving = CGPoint(
+        x: 0.0,
+        y: data.showWeatherEffects ? 50.0 : -50
+      )
+      
+      moveLabel(
+        label: departingFrom,
+        text: data.departingFrom,
+        offset: offsetDeparting
+      )
+      
+      moveLabel(
+        label: arrivingTo,
+        text: data.arrivingTo,
+        offset: offsetArriving
+      )
+      
+    } else {
+      bgImageView.image = UIImage(named: data.weatherImageName)
+      snowView.isHidden = !data.showWeatherEffects
+      
+      departingFrom.text = data.departingFrom
+      arrivingTo.text = data.arrivingTo
+    }
+    
     // schedule next flight
     delay(seconds: 3.0) {
       self.changeFlight(to: data.isTakingOff ? parisToRome : londonToParis, animated: true)
@@ -127,6 +215,7 @@ class ViewController: UIViewController {
     //start rotating the flights
     changeFlight(to: londonToParis, animated: false)
   }
+
   
   //MARK: utility methods
   func delay(seconds: Double, completion: @escaping ()-> Void) {

@@ -23,6 +23,8 @@
 import UIKit
 import QuartzCore
 
+
+//MARK: ViewController
 class ViewController: UIViewController {
   
   @IBOutlet var bgImageView: UIImageView!
@@ -72,37 +74,55 @@ class ViewController: UIViewController {
     )
     
     UIView.animate(
-        withDuration: 1,
-        delay: 0.0,
-        options: [.curveEaseOut],
-        animations: {
-            self.snowView.alpha = showEffects ? 1.0 : 0.0
-        },
-        completion: nil)
+      withDuration: 1.0,
+      delay: 0.0,
+      options: [.curveEaseOut],
+      animations: {
+        self.snowView.alpha = showEffects ? 1.0 : 0.0
+      },
+      completion: nil
+    )
+  }
+  
+  func moveLabel(
+    label: UILabel,
+    text: String,
+    offset: CGPoint
+  ) {
+    //TODO: Fancy animation goes here
+  }
+  
+  func cubeTransition(
+    label: UILabel,
+    text: String
+  ) {
+    //TODO: Animate me!!
   }
   
   //MARK: custom methods
+  
   func changeFlight(to data: FlightData, animated: Bool = false) {
     
     // populate the UI with the next flight's data
     summary.text = data.summary
     flightNr.text = data.flightNr
     gateNr.text = data.gateNr
+    flightStatus.text = data.flightStatus
     departingFrom.text = data.departingFrom
     arrivingTo.text = data.arrivingTo
-    flightStatus.text = data.flightStatus
 
-    //TODO: animate the UI
+    
+    // animate the UI
     if animated {
-        fade(
-            toImage: UIImage(named: data.weatherImageName)!,
-            showEffects: data.showWeatherEffects
-        )
+      fade(
+        toImage: UIImage(named: data.weatherImageName)!,
+        showEffects: data.showWeatherEffects
+      )
     } else {
-        bgImageView.image = UIImage(named: data.weatherImageName)
-        snowView.isHidden = !data.showWeatherEffects
+      bgImageView.image = UIImage(named: data.weatherImageName)
+      snowView.isHidden = !data.showWeatherEffects
     }
-
+    
     // schedule next flight
     delay(seconds: 3.0) {
       self.changeFlight(to: data.isTakingOff ? parisToRome : londonToParis, animated: true)
@@ -127,6 +147,7 @@ class ViewController: UIViewController {
     //start rotating the flights
     changeFlight(to: londonToParis, animated: false)
   }
+
   
   //MARK: utility methods
   func delay(seconds: Double, completion: @escaping ()-> Void) {
